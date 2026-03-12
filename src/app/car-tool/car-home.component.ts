@@ -15,7 +15,9 @@ import { Car } from '../../models/car.model';
     </app-tool-header>
     <app-car-table
       [cars]="cars()"
+      [editingCarId]="editingCarId()"
       (onDelete)="deleteCar($event)"
+      (onEdit)="setEditingCarId($event)"
     />
     <app-car-form (onAddCar)="addCar($event)" />
   `,
@@ -27,11 +29,17 @@ export class CarHomeComponent {
     { id: '3', make: 'Ford', model: 'Mustang', year: 2023, color: 'Red', price: 35000 },
   ]);
 
+  editingCarId = signal<string | null>(null);
+
   deleteCar(id: string) {
     this.cars.update((list) => list.filter((c) => c.id !== id));
   }
 
   addCar(car: Car) {
     this.cars.update((list) => [...list, car]);
+  }
+
+  setEditingCarId(id: string) {
+    this.editingCarId.set(id);
   }
 }
