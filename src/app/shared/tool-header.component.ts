@@ -1,14 +1,13 @@
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   standalone: true,
   selector: 'app-tool-header',
   template: `
     <header>
-      <h2>{{ headerText() }}</h2>
+      <ng-content select="[header]" />
+      <ng-content select="[slogan]" />
     </header>
   `,
 })
-export class ToolHeaderComponent {
-  headerText = input<string>('');
-}
+export class ToolHeaderComponent {}

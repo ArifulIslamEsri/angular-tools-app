@@ -1,12 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { ToolHeaderComponent } from './shared/tool-header.component';
 
 @Component({
   standalone: true,
   selector: 'app-counter-tool',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ToolHeaderComponent],
   template: `
-    <h2>Counter Tool</h2>
+    <app-tool-header>
+      <h2 header>Counter Tool</h2>
+    </app-tool-header>
     <p>Current Count: {{ counter() }}</p>
     <fieldset>
       <legend>Counter Controls</legend>

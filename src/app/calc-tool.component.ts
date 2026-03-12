@@ -1,12 +1,15 @@
 import { Component, signal } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { ToolHeaderComponent } from './shared/tool-header.component';
 
 @Component({
   standalone: true,
   selector: 'app-calc-tool',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ToolHeaderComponent],
   template: `
-    <h2>Calc Tool</h2>
+    <app-tool-header>
+      <h2 header>Calc Tool</h2>
+    </app-tool-header>
     <div>
       <div>Result: {{ result() }}</div>
       <div>Input: <input type="number" [formControl]="inputControl" /></div>
