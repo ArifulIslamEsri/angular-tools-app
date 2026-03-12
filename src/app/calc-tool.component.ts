@@ -16,12 +16,24 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
         <button (click)="multiply()">*</button>
         <button (click)="divide()">/</button>
       </div>
+      <h3>History</h3>
+      <ul>
+        @if (history().length === 0) {
+          <li>No History</li>
+        } @else {
+          @for (entry of history(); track $index) {
+            <li>{{ entry }}</li>
+          }
+        }
+      </ul>
+      <button (click)="clearHistory()">Clear History</button>
     </div>
   `,
 })
 export class CalcToolComponent {
   result = signal(0);
   inputControl = new FormControl(0);
+  history = signal<string[]>([]);
 
   getInput(): number {
     return Number(this.inputControl.value);
@@ -29,14 +41,17 @@ export class CalcToolComponent {
 
   add() {
     this.result.set(this.result() + this.getInput());
+    this.history.update((h) => [...h, `Add ${this.getInput()}`]);
   }
 
   subtract() {
     this.result.set(this.result() - this.getInput());
+    this.history.update((h) => [...h, `Subtract ${this.getInput()}`]);
   }
 
   multiply() {
     this.result.set(this.result() * this.getInput());
+    this.history.update((h) => [...h, `Multiply ${this.getInput()}`]);
   }
 
   divide() {
@@ -46,5 +61,10 @@ export class CalcToolComponent {
       return;
     }
     this.result.set(this.result() / input);
+    this.history.update((h) => [...h, `Divide ${this.getInput()}`]);
+  }
+
+  clearHistory() {
+    this.history.set([]);
   }
 }
